@@ -10,9 +10,7 @@ from flask_admin import helpers, expose
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .forms import LoginForm, RegistrationForm
-from .models import User
-
-
+from .models import User, Agenter
 
 
 
@@ -81,8 +79,9 @@ def index():
 
 
 # Create admin
-admin = admin.Admin(app, 'Example: Auth', index_view=MyAdminIndexView(), base_template='my_master.html')
+admin = admin.Admin(app, 'Agent Dash', index_view=MyAdminIndexView(), base_template='my_master.html')
 
 # Add view
 admin.add_view(MyModelView(User, db.session))
+admin.add_view(MyModelView(Agenter, db.session))
 

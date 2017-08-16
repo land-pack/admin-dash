@@ -5,23 +5,23 @@ from flask_login import LoginManager
 from flask_openid import OpenID
 import flask_login as login
 import flask_admin as admin
-# from config import basedir
+from config import basedir
 
 lm = LoginManager()
 
 app = Flask(__name__)
-# app.config.from_object("config")
+app.config.from_object("config")
 
 # Create dummy secrey key so we can use sessions
-app.config['SECRET_KEY'] = '123456790'
+#app.config['SECRET_KEY'] = '123456790'
 
 # Create in-memory database
-app.config['DATABASE_FILE'] = 'sample_db.sqlite'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + app.config['DATABASE_FILE']
-app.config['SQLALCHEMY_ECHO'] = True
+#app.config['DATABASE_FILE'] = 'sample_db.sqlite'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + app.config['DATABASE_FILE']
+#app.config['SQLALCHEMY_ECHO'] = True
+
 db = SQLAlchemy(app)
 
-basedir = './'
 
 lm.init_app(app)
 oid = OpenID(app, os.path.join(basedir, 'tmp'))

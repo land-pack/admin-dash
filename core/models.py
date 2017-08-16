@@ -26,3 +26,22 @@ class User(db.Model):
     # Required for administrative interface
     def __unicode__(self):
         return self.username
+
+
+
+# Create user model.
+class Agenter(db.Model):
+    f_id = db.Column(db.Integer, primary_key=True)
+    f_username = db.Column(db.String(100))
+    f_idcard = db.Column(db.String(128))
+    f_mobile = db.Column(db.String(80), unique=True)
+    f_alipay = db.Column(db.String(120))
+    f_qq = db.Column(db.String(64))
+    f_status = db.Column(db.Integer)
+    f_verify = db.Column(db.Integer)
+    f_relate_uid = db.Column(db.Integer)
+    f_regtime = db.Column(db.Date)
+    f_passwd = db.Column(db.String(256))
+    f_share_url = db.Column(db.String(128))
+    f_share_code = db.Column(db.String(128))
+
