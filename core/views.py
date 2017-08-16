@@ -82,7 +82,7 @@ class AgentView(MyModelView):
 
     column_exclude_list = ['f_passwd', 'f_share_url']
     column_searchable_list = ['f_mobile', 'f_share_code']
-    column_editable_list = ['f_verify', ]
+    column_editable_list = ['f_verify', "f_relate_uid"]
 
     # the different between form_choices and column_choices
     column_choices = {
@@ -103,7 +103,24 @@ class AgentView(MyModelView):
 
     }
 
+    column_labels = dict(f_username='Username', 
+    					f_idcar='IDCard',
+    					f_mobile='Mobile',
+    					f_alipay='Alipay',
+    					f_qq='QQ',
+    					f_status='Status',
+    					f_verify='Verify',
+    					f_relate_uid='UID',
+    					f_regtime='Regtime',
+    					f_share_code='Code'
+    					)
 
+    form_widget_args = {
+    'f_relate_uid': {
+        'rows': 10,
+        'style': 'color: black'
+    	}
+	}
 # Flask views
 @app.route('/')
 def index():
