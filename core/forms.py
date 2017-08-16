@@ -27,7 +27,9 @@ class LoginForm(form.Form):
             raise validators.ValidationError('Invalid user')
 
         # we're comparing the plaintext pw with the the hash from the db
-        if not check_password_hash(user.password, self.password.data):
+        print 'user.password', user.password
+        print 'db password', self.password.data
+        if user.password == generate_password_hash(self.password.data):
         # to compare plain text passwords use
         # if user.password != self.password.data:
             raise validators.ValidationError('Invalid password')

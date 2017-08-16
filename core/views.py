@@ -34,8 +34,10 @@ class MyAdminIndexView(admin.AdminIndexView):
     def login_view(self):
         # handle user login
         form = LoginForm(request.form)
+        print 'is form -->', helpers.validate_form_on_submit(form)
         if helpers.validate_form_on_submit(form):
             user = form.get_user()
+            print 'user --->', user
             login.login_user(user)
 
         if login.current_user.is_authenticated:
@@ -48,6 +50,7 @@ class MyAdminIndexView(admin.AdminIndexView):
     @expose('/register/', methods=('GET', 'POST'))
     def register_view(self):
         form = RegistrationForm(request.form)
+        print 'data is --> ', helpers.validate_form_on_submit(form)
         if helpers.validate_form_on_submit(form):
             user = User()
 
