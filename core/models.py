@@ -57,14 +57,23 @@ class Agenter(db.Model):
 # Create user model.
 class RechargeManager(db.Model):
     __tablename__ = 't_agent_player_log'
-    f_crtime = db.Column(db.TIMESTAMP)
+
+
     f_id = db.Column(db.Integer, primary_key=True)
+    f_crtime = db.Column(db.TIMESTAMP)
     f_agent_code = db.Column(db.String(64))
     f_invitee = db.Column(db.BIGINT)
     f_recharge = db.Column(db.BIGINT)
+    f_place = db.Column(db.BIGINT)
+    f_prize = db.Column(db.BIGINT)
+    f_prate = db.Column(db.FLOAT)
+    f_tax = db.Column(db.BIGINT)
+    f_cost = db.Column(db.BIGINT)
+    f_profit = db.Column(db.BIGINT)
+    
         # Required for administrative interface
     def __unicode__(self):
         return self.f_id
 
 # class PlayerDailyLog(db.Model):
-    
+

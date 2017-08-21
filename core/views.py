@@ -11,7 +11,6 @@ import flask_login as login
 import flask_admin as admin
 from flask_admin import helpers, expose
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from .forms import LoginForm, RegistrationForm
 from .models import User, Agenter, RechargeManager
 
@@ -140,12 +139,6 @@ class NewAgentModelView(AgentView):
     def get_count_query(self):
         return self.session.query(func.count('*')).filter(self.model.f_verify!=0)
 
-     #    form_widget_args = {
-     #    'f_verify': {
-     #        'rows': 7,
-     #        'style': 'color: red'
-     #    	}
-    	# }
 
 class OldAgentModelView(AgentView):
 
@@ -203,10 +196,6 @@ class RechargeModelView(MyModelView):
     can_view_details = True
     can_export = True
 
-    # form_extra_fields = {
-    #     'password': random.randint(1, 10)
-    # }
-
     column_filters = (
 
             'f_crtime',
@@ -218,9 +207,16 @@ class RechargeModelView(MyModelView):
                         f_crtime='Created', 
                         f_agent_code='Agenter',
                         f_invitee='Invitee',
-                        f_recharge='Recharge'
+                        f_recharge='Recharge',
+                        f_place='place',
+                        f_prize='prize',
+                        f_prate='prate',
+                        f_tax='tax',
+                        f_cost='cost',
+                        f_profit='profit'
                         )
 
+    column_searchable_list =[ 'f_invitee', ]
 
 
 # Flask views
