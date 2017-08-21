@@ -4,6 +4,7 @@ from core import lm
 from core import oid
 from core import db
 from flask_admin.contrib import sqla
+from flask_admin.contrib.sqla.view import func
 from flask_admin.contrib.sqla.filters import BooleanEqualFilter
 import flask_login as login
 import flask_admin as admin
@@ -135,6 +136,9 @@ class NewAgentModelView(AgentView):
     def get_query(self):
         return self.session.query(self.model).filter(self.model.f_verify!=0)
 
+    def get_count_query(self):
+        return self.session.query(func.count('*')).filter(self.model.f_verify!=0)
+
      #    form_widget_args = {
      #    'f_verify': {
      #        'rows': 7,
@@ -187,6 +191,8 @@ class OldAgentModelView(AgentView):
     def get_query(self):
         return self.session.query(self.model).filter(self.model.f_verify==0)
 
+    def get_count_query(self):
+        return self.session.query(func.count('*')).filter(self.model.f_verify==0)
 
 
 # Flask views
