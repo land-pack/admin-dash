@@ -65,3 +65,6 @@ class RechargeManager(db.Model):
         # Required for administrative interface
     def __unicode__(self):
         return self.f_id
+
+# class PlayerDailyLog(db.Model):
+    

@@ -1,3 +1,4 @@
+import random
 from flask import render_template, flash, redirect, url_for, session, g, request
 from core import app
 from core import lm
@@ -201,6 +202,24 @@ class RechargeModelView(MyModelView):
     can_edit = False
     can_view_details = True
     can_export = True
+
+    # form_extra_fields = {
+    #     'password': random.randint(1, 10)
+    # }
+
+    column_filters = (
+
+            'f_crtime',
+            'f_invitee'
+        )
+
+    column_labels = dict(
+                        f_id = 'ID',
+                        f_crtime='Created', 
+                        f_agent_code='Agenter',
+                        f_invitee='Invitee',
+                        f_recharge='Recharge'
+                        )
 
 
 
