@@ -49,3 +49,19 @@ class Agenter(db.Model):
     f_refound = db.Column(db.Integer)
     f_refound_done = db.Column(db.Integer)
     f_refound_status = db.Column(db.Integer)
+    # Required for administrative interface
+    def __unicode__(self):
+        return self.f_idcard
+
+
+# Create user model.
+class RechargeManager(db.Model):
+    __tablename__ = 't_agent_player_log'
+    f_crtime = db.Column(db.TIMESTAMP)
+    f_id = db.Column(db.Integer, primary_key=True)
+    f_agent_code = db.Column(db.String(64))
+    f_invitee = db.Column(db.BIGINT)
+    f_recharge = db.Column(db.BIGINT)
+        # Required for administrative interface
+    def __unicode__(self):
+        return self.f_id

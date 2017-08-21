@@ -12,7 +12,7 @@ from flask_admin import helpers, expose
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .forms import LoginForm, RegistrationForm
-from .models import User, Agenter
+from .models import User, Agenter, RechargeManager
 
 
 # Create customized model view class
@@ -195,6 +195,15 @@ class OldAgentModelView(AgentView):
         return self.session.query(func.count('*')).filter(self.model.f_verify==0)
 
 
+class RechargeModelView(MyModelView):
+    can_create = False
+    can_delete = False
+    can_edit = False
+    can_view_details = True
+    can_export = True
+
+
+
 # Flask views
 @app.route('/')
 def index():
@@ -213,7 +222,9 @@ class NewAgenter(Agenter):
 class OldAgenter(Agenter):
     pass
 
+
 # Add view
 admin.add_view(MyModelView(User, db.session))
 admin.add_view(NewAgentModelView(NewAgenter, db.session))
 admin.add_view(OldAgentModelView(OldAgenter, db.session))
+admin.add_view(RechargeModelView(RechargeManager, db.session))
