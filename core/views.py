@@ -103,8 +103,12 @@ class AgentView(MyModelView):
 
     }
 
+    column_descriptions = {
+    	"f_username":'First name and last name'
+    }
+
     column_labels = dict(f_username='Username', 
-    					f_idcar='IDCard',
+    					f_idcard='IDCard',
     					f_mobile='Mobile',
     					f_alipay='Alipay',
     					f_qq='QQ',
@@ -115,12 +119,14 @@ class AgentView(MyModelView):
     					f_share_code='Code'
     					)
 
-    form_widget_args = {
-    'f_relate_uid': {
-        'rows': 10,
-        'style': 'color: black'
-    	}
-	}
+
+ #    form_widget_args = {
+ #    'f_verify': {
+ #        'rows': 7,
+ #        'style': 'color: red'
+ #    	}
+	# }
+
 # Flask views
 @app.route('/')
 def index():

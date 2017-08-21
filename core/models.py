@@ -47,3 +47,22 @@ class Agenter(db.Model):
     f_share_url = db.Column(db.String(128))
     f_share_code = db.Column(db.String(32), unique=True)
 
+
+# Create user model.
+class OldAgenter(db.Model):
+    __tablename__ = 't_agent_old_user'
+    f_id = db.Column(db.Integer, primary_key=True)
+    f_username = db.Column(db.String(64))
+    f_share_code = db.Column(db.String(32), unique=True)
+    
+    f_idcard = db.Column(db.String(18), unique=True)
+    f_mobile = db.Column(db.String(11), unique=True)
+    f_alipay = db.Column(db.String(64))
+    f_qq = db.Column(db.String(16))
+    f_status = db.Column(db.Integer)
+    f_verify = db.Column(db.Integer)
+    f_relate_uid = db.Column(db.BIGINT)
+    f_regtime = db.Column(db.TIMESTAMP)
+    f_passwd = db.Column(db.String(128))
+    f_share_url = db.Column(db.String(128))
+
