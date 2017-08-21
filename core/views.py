@@ -4,6 +4,7 @@ from core import lm
 from core import oid
 from core import db
 from flask_admin.contrib import sqla
+from flask_admin.contrib.sqla.filters import BooleanEqualFilter
 import flask_login as login
 import flask_admin as admin
 from flask_admin import helpers, expose
@@ -107,7 +108,9 @@ class AgentView(MyModelView):
     	"f_username":'First name and last name'
     }
 
-    column_labels = dict(f_username='Username', 
+    column_labels = dict(
+                        f_id = 'ID',
+                        f_username='Username', 
     					f_idcard='IDCard',
     					f_mobile='Mobile',
     					f_alipay='Alipay',
@@ -116,16 +119,75 @@ class AgentView(MyModelView):
     					f_verify='Verify',
     					f_relate_uid='UID',
     					f_regtime='Regtime',
-    					f_share_code='Code'
+    					f_share_code='Code',
+                        f_refound = 'Refound',
+                        f_refound_done = 'Refounded',
+                        f_refound_status = 'RefoundStatus'
     					)
 
+class NewAgentModelView(AgentView):
+    # column_filters = (BooleanEqualFilter(column=Agenter.f_verify, name=0),)
 
- #    form_widget_args = {
- #    'f_verify': {
- #        'rows': 7,
- #        'style': 'color: red'
- #    	}
-	# }
+    column_list = ('f_regtime', 'f_username', 'f_idcard', 'f_mobile',
+                'f_alipay', 'f_qq', 'f_verify', 'f_relate_uid'
+        )
+
+    def get_query(self):
+        return self.session.query(self.model).filter(self.model.f_verify!=0)
+
+     #    form_widget_args = {
+     #    'f_verify': {
+     #        'rows': 7,
+     #        'style': 'color: red'
+     #    	}
+    	# }
+
+class OldAgentModelView(AgentView):
+
+    column_list = ('f_id', 'f_username', 'f_idcard', 'f_share_code', 
+        'f_relate_uid', 'f_regtime', 'f_refound', 'f_refound_done', 
+        'f_refound_status', 'f_status'
+        )
+
+
+    column_editable_list = ['f_status', 'f_refound_status' ]
+
+    # the different between form_choices and column_choices
+    column_choices = {
+        'f_status': [
+            (1, 'Accept'),
+            (-1, 'Freeze'),
+            (0, 'Recjected')
+        ],
+        'f_refound_status': [
+            (-1, 'Closed'),
+            (0, 'Opened'),
+            (1, 'Applying'),
+            (2, 'Accept')
+        ],
+
+    }
+
+    form_choices = {
+        "f_refound_status": [
+            ("Closed", "Closed"),
+            ("Opened", "Opened"),
+            ("Applying", "Applying"),
+            ("Accept", "Accept")
+
+        ],
+        "f_status": [
+            ("Freeze", "Freeze"),
+            ("Accept", "Accept"),
+            ("Recjected", "Recjected")
+        ]
+
+    }
+
+    def get_query(self):
+        return self.session.query(self.model).filter(self.model.f_verify==0)
+
+
 
 # Flask views
 @app.route('/')
@@ -137,6 +199,15 @@ def index():
 admin = admin.Admin(app, 'Agent Dash', index_view=MyAdminIndexView(
 ), base_template='my_master.html')
 
+
+
+class NewAgenter(Agenter):
+    pass
+
+class OldAgenter(Agenter):
+    pass
+
 # Add view
 admin.add_view(MyModelView(User, db.session))
-admin.add_view(AgentView(Agenter, db.session))
+admin.add_view(NewAgentModelView(NewAgenter, db.session))
+admin.add_view(OldAgentModelView(OldAgenter, db.session))
