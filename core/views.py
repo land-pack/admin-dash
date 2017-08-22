@@ -228,6 +228,29 @@ class PlayerDailyModelView(MyModelView):
     can_export = True
 
 
+    column_labels = dict(
+            f_id = 'ID',
+            f_reg_users = 'Register',
+            f_recharge_users='Recharges',
+            f_new_recharge_users='NewRecharges',
+            f_new_place_users='NewPlaces',
+            f_dau='DAU',
+            f_alive_2_day='Alive2day',
+            f_recharge_moneys='RechargeMoneys',
+            f_arpu='Arpu',
+            f_place_users='Places',
+            f_from='From',
+            f_src='Src',
+            f_crtime='Date'
+
+        )
+
+
+    column_filters = (
+            'f_crtime',
+        )
+
+
 
 
 # Flask views
