@@ -90,5 +90,6 @@ class PlayerDailyLog(db.Model):
     f_arpu = db.Column(db.BIGINT) # arpu value
     f_place_users = db.Column(db.BIGINT) # total place user number 
     f_crtime = db.Column(db.TIMESTAMP) # day time
+    f_src  = db.Column(db.String(32))
 
 

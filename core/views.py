@@ -248,9 +248,11 @@ class PlayerDailyModelView(MyModelView):
 
     column_filters = (
             'f_crtime',
+            'f_id'
         )
 
 
+    column_exclude_list = ['f_src',]
 
 
 # Flask views
@@ -271,10 +273,46 @@ class NewAgenter(Agenter):
 class OldAgenter(Agenter):
     pass
 
+class IosPlayerDailyLog(PlayerDailyLog):
+    pass
+
+class AndroidPlayerDailyLog(PlayerDailyLog):
+    pass
+
+class H5PlayerDailyLog(PlayerDailyLog):
+    pass
+
+
+
+class IOSPlayerDailyModelView(PlayerDailyModelView):
+    def get_query(self):
+        return self.session.query(self.model).filter(self.model.f_src=='ios')
+
+    def get_count_query(self):
+        return self.session.query(func.count('*')).filter(self.model.f_src=='ios')
+
+class AndroidPlayerDailyModelView(PlayerDailyModelView):
+    def get_query(self):
+        return self.session.query(self.model).filter(self.model.f_src=='android')
+
+    def get_count_query(self):
+        return self.session.query(func.count('*')).filter(self.model.f_src=='android')
+
+
+class H5PlayerDailyModelView(PlayerDailyModelView):
+    def get_query(self):
+        return self.session.query(self.model).filter(self.model.f_src=='h5')
+
+    def get_count_query(self):
+        return self.session.query(func.count('*')).filter(self.model.f_src=='h5')
+
+
 
 # Add view
 admin.add_view(MyModelView(User, db.session))
 admin.add_view(NewAgentModelView(NewAgenter, db.session))
 admin.add_view(OldAgentModelView(OldAgenter, db.session))
 admin.add_view(RechargeModelView(RechargeManager, db.session))
-admin.add_view(PlayerDailyModelView(PlayerDailyLog, db.session))
+admin.add_view(IOSPlayerDailyModelView(IosPlayerDailyLog, db.session, category='Platform'))
+admin.add_view(AndroidPlayerDailyModelView(AndroidPlayerDailyLog, db.session, category='Platform'))
+admin.add_view(H5PlayerDailyModelView(H5PlayerDailyLog, db.session, category='Platform'))
