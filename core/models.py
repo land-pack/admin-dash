@@ -10,6 +10,7 @@ class User(db.Model):
     login = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120))
     password = db.Column(db.String(64))
+    status = db.Column(db.Integer)
 
     # Flask-Login integration
     def is_authenticated(self):
@@ -49,6 +50,7 @@ class Agenter(db.Model):
     f_refound = db.Column(db.Integer)
     f_refound_done = db.Column(db.Integer)
     f_refound_status = db.Column(db.Integer)
+    f_uid_passwd = db.Column(db.String(128))
     # Required for administrative interface
     def __unicode__(self):
         return self.f_idcard

@@ -123,15 +123,18 @@ class AgentView(MyModelView):
     					f_share_code='Code',
                         f_refound = 'Refound',
                         f_refound_done = 'Refounded',
-                        f_refound_status = 'RefoundStatus'
+                        f_refound_status = 'RefoundStatus',
+                        f_uid_passwd='PASSWD'
     					)
 
 class NewAgentModelView(AgentView):
     # column_filters = (BooleanEqualFilter(column=Agenter.f_verify, name=0),)
 
     column_list = ('f_regtime', 'f_username', 'f_idcard', 'f_mobile',
-                'f_alipay', 'f_qq', 'f_verify', 'f_relate_uid'
+                'f_alipay', 'f_qq', 'f_verify', 'f_relate_uid', 'f_uid_passwd'
         )
+
+    column_editable_list = ['f_verify', 'f_uid_passwd', "f_relate_uid"]
 
     def get_query(self):
         return self.session.query(self.model).filter(self.model.f_verify!=0)
@@ -255,6 +258,15 @@ class PlayerDailyModelView(MyModelView):
     column_exclude_list = ['f_src',]
 
 
+class UserModelView(MyModelView):
+    def get_query(self):
+        return self.session.query(self.model).filter(self.model.status==0)
+
+    def get_count_query(self):
+        return self.session.query(func.count('*')).filter(self.model.status==0)
+
+
+
 # Flask views
 @app.route('/')
 def index():
@@ -309,7 +321,7 @@ class H5PlayerDailyModelView(PlayerDailyModelView):
 
 
 # Add view
-admin.add_view(MyModelView(User, db.session))
+admin.add_view(UserModelView(User, db.session))
 admin.add_view(NewAgentModelView(NewAgenter, db.session))
 admin.add_view(OldAgentModelView(OldAgenter, db.session))
 admin.add_view(RechargeModelView(RechargeManager, db.session))
