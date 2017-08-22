@@ -70,10 +70,25 @@ class RechargeManager(db.Model):
     f_tax = db.Column(db.BIGINT)
     f_cost = db.Column(db.BIGINT)
     f_profit = db.Column(db.BIGINT)
-    
-        # Required for administrative interface
+
+    # Required for administrative interface
     def __unicode__(self):
         return self.f_id
 
-# class PlayerDailyLog(db.Model):
+class PlayerDailyLog(db.Model):
+    __tablename__ = 't_agent_daily_log'
+
+
+    f_id = db.Column(db.Integer, primary_key=True)
+    f_reg_users = db.Column(db.BIGINT) # current day register user numbers
+    f_recharge_users = db.Column(db.BIGINT) # current day all recharge user numbers
+    f_new_recharge_users = db.Column(db.BIGINT) # new recharge user
+    f_new_place_users = db.Column(db.BIGINT) # new vguess place user 
+    f_dau = db.Column(db.BIGINT) # DAU 
+    f_alive_2_day = db.Column(db.BIGINT) # alive util second day 
+    f_recharge_moneys = db.Column(db.BIGINT) # recharge total moneys
+    f_arpu = db.Column(db.BIGINT) # arpu value
+    f_place_users = db.Column(db.BIGINT) # total place user number 
+    f_crtime = db.Column(db.TIMESTAMP) # day time
+
 

@@ -12,7 +12,7 @@ import flask_admin as admin
 from flask_admin import helpers, expose
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegistrationForm
-from .models import User, Agenter, RechargeManager
+from .models import User, Agenter, RechargeManager, PlayerDailyLog
 
 
 # Create customized model view class
@@ -219,6 +219,17 @@ class RechargeModelView(MyModelView):
     column_searchable_list =[ 'f_invitee', ]
 
 
+
+class PlayerDailyModelView(MyModelView):
+    can_create = False
+    can_delete = False
+    can_edit = False
+    can_view_details = True
+    can_export = True
+
+
+
+
 # Flask views
 @app.route('/')
 def index():
@@ -230,7 +241,7 @@ admin = admin.Admin(app, 'Agent Dash', index_view=MyAdminIndexView(
 ), base_template='my_master.html')
 
 
-
+# Just rename the class for different page!
 class NewAgenter(Agenter):
     pass
 
@@ -243,3 +254,4 @@ admin.add_view(MyModelView(User, db.session))
 admin.add_view(NewAgentModelView(NewAgenter, db.session))
 admin.add_view(OldAgentModelView(OldAgenter, db.session))
 admin.add_view(RechargeModelView(RechargeManager, db.session))
+admin.add_view(PlayerDailyModelView(PlayerDailyLog, db.session))
